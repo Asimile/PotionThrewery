@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbuw1lcpte706"]
+
+[ext_resource type="Shader" path="res://Shaders/potion.gdshader" id="1_82hsd"]
+[ext_resource type="Script" path="res://Scenes/potion.gd" id="1_ovr8j"]
+[ext_resource type="Texture2D" uid="uid://mbod2x2votgh" path="res://Assets/MyAssets/PotionThreweryPotion.png" id="2_bhwkp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iwlyb"]
+shader = ExtResource("1_82hsd")
+shader_parameter/WHITE = Color(1, 1, 1, 1)
+shader_parameter/NEW_COLOR = null
+
+[node name="Potion" type="Node2D"]
+position = Vector2(103, 48)
+scale = Vector2(4.50535, 4.98575)
+script = ExtResource("1_ovr8j")
+
+[node name="PotionSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_iwlyb")
+position = Vector2(11.9857, 0.200572)
+texture = ExtResource("2_bhwkp")
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+offset_left = -20.0
+offset_top = -3.0
+offset_right = -12.0
+offset_bottom = 5.0
+text = "hi"
+
+[connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]

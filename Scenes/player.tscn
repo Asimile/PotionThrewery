@@ -1,11 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://dprsc7moy1bq3"]
+[gd_scene load_steps=5 format=3 uid="uid://dprsc7moy1bq3"]
 
 [ext_resource type="Script" path="res://Code/player.gd" id="1_peo5x"]
+[ext_resource type="Texture2D" uid="uid://b24i247cxxtrr" path="res://icon.svg" id="2_knc40"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iwqck"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kmrnn"]
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_peo5x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_iwqck")
+debug_color = Color(0, 0.65098, 0.156863, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Icon" type="Sprite2D" parent="Camera2D"]
+position = Vector2(496, 246)
+texture = ExtResource("2_knc40")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(1.03432, 1.0385)
+shape = SubResource("CircleShape2D_kmrnn")
+debug_color = Color(0.592157, 0.545098, 0, 0.419608)
