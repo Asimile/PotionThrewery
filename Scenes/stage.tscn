@@ -2,15 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://dprsc7moy1bq3" path="res://Scenes/player.tscn" id="1_4x7hi"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_60m2j"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aicg0"]
 
 [node name="Stage" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_4x7hi")]
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(105, 40)
-shape = SubResource("RectangleShape2D_60m2j")
-debug_color = Color(0, 0.627451, 0.509804, 0.419608)
+position = Vector2(66, 18)
+shape = SubResource("RectangleShape2D_aicg0")

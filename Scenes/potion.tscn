@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbuw1lcpte706"]
+[gd_scene load_steps=6 format=3 uid="uid://bbuw1lcpte706"]
 
 [ext_resource type="Shader" path="res://Shaders/potion.gdshader" id="1_82hsd"]
 [ext_resource type="Script" path="res://Scenes/potion.gd" id="1_ovr8j"]
@@ -9,21 +9,29 @@ shader = ExtResource("1_82hsd")
 shader_parameter/WHITE = Color(1, 1, 1, 1)
 shader_parameter/NEW_COLOR = null
 
-[node name="Potion" type="Node2D"]
-position = Vector2(103, 48)
+[sub_resource type="CircleShape2D" id="CircleShape2D_x0i55"]
+
+[node name="Potion" type="Area2D"]
 scale = Vector2(4.50535, 4.98575)
 script = ExtResource("1_ovr8j")
 
 [node name="PotionSprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_iwlyb")
-position = Vector2(11.9857, 0.200572)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_bhwkp")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.200572)
+scale = Vector2(0.0645052, 0.0840375)
+shape = SubResource("CircleShape2D_x0i55")
+debug_color = Color(0.6, 0.368627, 1, 0.419608)
+
 [node name="ColorPickerButton" type="ColorPickerButton" parent="."]
-offset_left = -20.0
-offset_top = -3.0
-offset_right = -12.0
-offset_bottom = 5.0
+visible = false
+offset_left = 41.7282
+offset_top = 3.20915
+offset_right = 64.7282
+offset_bottom = 34.2091
 text = "hi"
 
 [connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
