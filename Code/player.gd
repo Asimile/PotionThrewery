@@ -3,6 +3,7 @@ extends CharacterBody2D
 var INPUT_VECTOR = Vector2(0, 0)
 
 var move_speed: float = 150.0
+var health: int = 6
 
 @export var Potion :PackedScene
 
@@ -11,6 +12,10 @@ var move_speed: float = 150.0
 
 func _ready():
 	pass
+
+func _process(delta):
+	if Input.is_action_just_pressed("throw"):
+		throw_potion()
 
 func _physics_process(delta):
 	#get input direction
@@ -25,11 +30,9 @@ func _physics_process(delta):
 	move_and_slide()
 	PLAYER_SPRITE.look_at(get_global_mouse_position())
 	
-	
-func _unhandled_input(event):
-	if event.is_action_pressed("throw"):
-		throw_potion()
 
+
+# https://www.youtube.com/watch?v=ggt05fCiH7M&list=PLpwc3ughKbZexDyPexHN2MXLliKAovkpl&index=3
 func throw_potion():
 	var potion_instance = Potion.instantiate()
 	add_child(potion_instance)

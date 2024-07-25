@@ -5,9 +5,10 @@ var potion_speed: float = 5.0
 var direction: Vector2 = Vector2.ZERO
 
 @onready var POTION_SPRITE = $PotionSprite
+@onready var KILL_TIMER = $KillTimer
 
 func _ready():
-	pass
+	KILL_TIMER.start()
 
 func _physics_process(delta: float):
 	if direction != Vector2.ZERO:
@@ -21,4 +22,12 @@ func set_direction(direction: Vector2):
 
 func _on_color_picker_button_color_changed(color):
 	POTION_SPRITE.material.set_shader_parameter("NEW_COLOR", color)
-	pass # Replace with function body.
+
+func _on_kill_timer_timeout():
+	queue_free()
+
+func _on_body_entered(body):
+	if body.has_method("handle_hit"):
+		body.handle_hit()
+		#will be changed later to instead do special potion effects
+		queue_free()

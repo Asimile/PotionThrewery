@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bbuw1lcpte706"]
 
 [ext_resource type="Shader" path="res://Shaders/potion.gdshader" id="1_82hsd"]
-[ext_resource type="Script" path="res://Scenes/potion.gd" id="1_ovr8j"]
+[ext_resource type="Script" path="res://Code/potion.gd" id="1_trsdo"]
 [ext_resource type="Texture2D" uid="uid://mbod2x2votgh" path="res://Assets/MyAssets/PotionThreweryPotion.png" id="2_bhwkp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iwlyb"]
@@ -13,7 +13,7 @@ shader_parameter/NEW_COLOR = null
 
 [node name="Potion" type="Area2D"]
 scale = Vector2(4.50535, 4.98575)
-script = ExtResource("1_ovr8j")
+script = ExtResource("1_trsdo")
 
 [node name="PotionSprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_iwlyb")
@@ -34,4 +34,9 @@ offset_right = 64.7282
 offset_bottom = 34.2091
 text = "hi"
 
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]
