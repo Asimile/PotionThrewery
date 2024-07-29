@@ -1,16 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://dprsc7moy1bq3"]
+[gd_scene load_steps=9 format=3 uid="uid://dprsc7moy1bq3"]
 
 [ext_resource type="Script" path="res://Code/player.gd" id="1_peo5x"]
 [ext_resource type="PackedScene" uid="uid://bbuw1lcpte706" path="res://Scenes/potion.tscn" id="2_iajll"]
 [ext_resource type="Texture2D" uid="uid://c0mn3gq30qv6y" path="res://Assets/MyAssets/PotionThreweryPlayerBig.png" id="2_jqeqc"]
 [ext_resource type="Texture2D" uid="uid://3ibo8n5b6dek" path="res://Assets/MyAssets/PotionThreweryFrame.png" id="3_n0kgp"]
+[ext_resource type="Shader" path="res://Shaders/nextpotion.gdshader" id="5_cvlk8"]
+[ext_resource type="Texture2D" uid="uid://mbod2x2votgh" path="res://Assets/MyAssets/PotionThreweryPotion.png" id="6_0jy24"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iwqck"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kmrnn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1uyx0"]
+shader = ExtResource("5_cvlk8")
+shader_parameter/OLD_COLOR = Color(1, 1, 1, 1)
+shader_parameter/NEW_COLOR = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 8
+collision_mask = 72
+collision_priority = 10.0
 script = ExtResource("1_peo5x")
 Potion = ExtResource("2_iajll")
 
@@ -29,17 +35,18 @@ debug_color = Color(0, 0.65098, 0.156863, 0.419608)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.5, 2.5)
+limit_left = -500
+limit_top = -300
+limit_right = 525
+limit_bottom = 400
 
 [node name="PotionFrame" type="Sprite2D" parent="Camera2D"]
 position = Vector2(190, 87)
 scale = Vector2(2, 2)
 texture = ExtResource("3_n0kgp")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 0
-
-[node name="PlayerHitbox" type="CollisionShape2D" parent="Area2D"]
-scale = Vector2(0.9, 0.9)
-shape = SubResource("CircleShape2D_kmrnn")
-debug_color = Color(0.592157, 0.545098, 0, 0.419608)
+[node name="NextPotion" type="Sprite2D" parent="Camera2D"]
+material = SubResource("ShaderMaterial_1uyx0")
+position = Vector2(190, 84)
+scale = Vector2(5, 5)
+texture = ExtResource("6_0jy24")

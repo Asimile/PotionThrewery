@@ -31,3 +31,6 @@ func _on_body_entered(body):
 		body.handle_hit()
 		#will be changed later to instead do special potion effects
 		queue_free()
+	else:
+		print("Wall hit?")
+		queue_free()

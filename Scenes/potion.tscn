@@ -13,6 +13,8 @@ shader_parameter/NEW_COLOR = null
 
 [node name="Potion" type="Area2D"]
 scale = Vector2(4.50535, 4.98575)
+collision_layer = 4
+collision_mask = 24
 script = ExtResource("1_trsdo")
 
 [node name="PotionSprite" type="Sprite2D" parent="."]
