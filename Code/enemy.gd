@@ -3,18 +3,24 @@ extends CharacterBody2D
 var move_speed: float = 40.0
 var enemy_health: int = 2
 
+@onready var ENEMY_SPRITE = $EnemySprite
 @onready var SPEED_TIMER = $SpeedTimer
 @onready var SHADOW_TIMER = $ShadowTimer
 @onready var ICE_TIMER = $IceTimer
+@onready var ICE_RECT = $IceRect
+@onready var SHADOW_RECT = $EnemySprite/ShadowRect
+@onready var ENEMY_HEALTH = $EnemyHealth
 
 func _physics_process(delta):
 	var player = get_parent().get_node("Player")
 	
-	look_at(player.global_position)
+	ENEMY_SPRITE.look_at(player.global_position)
 	
 	velocity = ((player.global_position - global_position).normalized()) * move_speed
 	
 	move_and_slide()
+	
+	ENEMY_HEALTH.text = str(enemy_health)
 	
 	if enemy_health <= 0:
 		die()
@@ -26,31 +32,27 @@ func handle_potion_hit(potion_type: int):
 			# Health potion
 			enemy_health += 1
 		1:
-			# Fire potion
-			pass
-		2:
 			# Damage potion
 			enemy_health -= 1
-		3:
+		2:
 			# Water potion
 			pass
-		4:
+		3:
 			# Speed potion
 			move_speed += 20
 			SPEED_TIMER.start()
-		5:
-			# Poison potion
-			pass
-		6:
+		4:
 			# Death potion
 			die()
-		7:
+		5:
 			# Shadow potion
 			collision_layer = (0 << 4)
+			SHADOW_RECT.visible = true
 			SHADOW_TIMER.start()
-		8:
+		6:
 			# Ice potion
 			move_speed = 0
+			ICE_RECT.visible = true
 			ICE_TIMER.start()
 		_:
 			pass
@@ -76,6 +78,8 @@ func _on_speed_timer_timeout():
 
 func _on_shadow_timer_timeout():
 	collision_layer = (1 << 4)
+	SHADOW_RECT.visible = false
 
 func _on_ice_timer_timeout():
 	move_speed = 40
+	ICE_RECT.visible = false

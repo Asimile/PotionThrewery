@@ -13,10 +13,36 @@ script = ExtResource("1_v2e0k")
 
 [node name="StartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 422.0
-offset_top = 185.0
-offset_right = 640.0
-offset_bottom = 271.0
+offset_left = 407.0
+offset_top = 253.0
+offset_right = 625.0
+offset_bottom = 339.0
 text = "Start"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 99.0
+offset_right = 393.0
+offset_bottom = 131.0
+scale = Vector2(3.67665, 4.20109)
+text = "POTION THREWERY"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 596.0
+offset_top = 371.0
+offset_right = 901.0
+offset_bottom = 394.0
+scale = Vector2(1.21875, 1.33575)
+text = "Pretend this is a really good title screen"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 467.0
+offset_right = 232.0
+offset_bottom = 490.0
+text = "And that there's a cool transition from title screen to the game and back"
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

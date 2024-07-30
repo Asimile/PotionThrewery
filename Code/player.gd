@@ -1,24 +1,26 @@
 extends CharacterBody2D
 
 var INPUT_VECTOR = Vector2(0, 0)
-var move_speed: float = 150.0
+var move_speed: int = 150
 var health: int = 6
 var next_potion: potions
 var dead: bool = false
 
-enum potions {HEALING, DAMAGE, FIRE, WATER, SPEED, POISON, DEATH, SHADOW, ICE}
-@export var potions_names = {potions.HEALING: "Healing", potions.FIRE: "Fire", potions.DAMAGE: "Damage",
-potions.WATER: "Water", potions.SPEED: "Speed", potions.POISON: "Poison", potions.DEATH: "Death", 
-potions.SHADOW: "Shadow", potions.ICE: "Ice"}
+enum potions {HEALING, DAMAGE, WATER, SPEED, DEATH, SHADOW, ICE}
+@export var potions_names = {potions.HEALING: "Healing", potions.DAMAGE: "Damage", potions.WATER: "Water", 
+potions.SPEED: "Speed", potions.DEATH: "Death", potions.SHADOW: "Shadow", potions.ICE: "Ice"}
 
 @export var Potion :PackedScene
 
 @onready var PLAYER_SPRITE = $PlayerSprite
 @onready var THROW_POSITION = $PlayerSprite/ThrowPosition
-@onready var SPEED_TIMER = $SpeedTimer
-@onready var SHADOW_TIMER = $ShadowTimer
-@onready var ICE_TIMER = $IceTimer
+@onready var SPEED_TIMER = $Timers/SpeedTimer
+@onready var SHADOW_TIMER = $Timers/ShadowTimer
+@onready var ICE_TIMER = $Timers/IceTimer
 @onready var POTION_LABEL = $PotionLabel
+@onready var HP_LABEL = $HPLabel
+@onready var ICE_RECT = $IceRect
+@onready var SHADOW_RECT = $PlayerSprite/ShadowRect
 
 func _ready():
 	pick_random_potion()
@@ -35,22 +37,22 @@ func _physics_process(delta):
 	INPUT_VECTOR.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	
 	
-	velocity = INPUT_VECTOR * move_speed
+	velocity = INPUT_VECTOR.normalized() * move_speed
 	
 	#print(INPUT_VECTOR)
 	
 	move_and_slide()
 	PLAYER_SPRITE.look_at(get_global_mouse_position())
+	HP_LABEL.text = "HP: " + str(health)
+	
+	if health <= 0:
+		die()
 	
 func hit_by_enemy(direction: Vector2):
 	health -= 1
 	print(health)
 	velocity += direction * 1000
 	move_and_slide()
-	if health <= 0:
-		if !dead:
-			dead = true
-			die()
 
 # https://www.youtube.com/watch?v=ggt05fCiH7M&list=PLpwc3ughKbZexDyPexHN2MXLliKAovkpl&index=3
 func throw_potion():
@@ -74,6 +76,7 @@ func drink_potion():
 	var target = get_global_mouse_position()
 	var direction_to_mouse = potion_instance.global_position.direction_to(target).normalized()
 	potion_instance.set_direction(direction_to_mouse)
+	potion_instance.potion_type = next_potion
 	# Picks a new random potion
 	pick_random_potion()
 
@@ -86,37 +89,33 @@ func pick_random_potion():
 	
 
 func handle_potion_hit(potion_type):
-	print("Enemy hit!")
+	print("Player drank!")
 	match potion_type:
 		0:
 			# Health potion
 			health += 1
 		1:
-			# Fire potion
-			pass
-		2:
 			# Damage potion
 			health -= 1
-		3:
+		2:
 			# Water potion
 			pass
-		4:
+		3:
 			# Speed potion
-			move_speed += 20
+			move_speed += 30
 			SPEED_TIMER.start()
-		5:
-			# Poison potion
-			pass
-		6:
+		4:
 			# Death potion
 			die()
-		7:
+		5:
 			# Shadow potion
 			collision_layer = (0 << 0)
+			SHADOW_RECT.visible = true
 			SHADOW_TIMER.start()
-		8:
+		6:
 			# Ice potion
 			move_speed = 0
+			ICE_RECT.visible = true
 			ICE_TIMER.start()
 		_:
 			pass
@@ -126,11 +125,15 @@ func die():
 
 
 func _on_speed_timer_timeout():
-	move_speed -= 20
+	move_speed -= 30
+	print("Player speed ended")
 
 func _on_shadow_timer_timeout():
 	collision_layer = (1 << 0)
-
+	SHADOW_RECT.visible = false
+	print("Player shadow ended")
 
 func _on_ice_timer_timeout():
 	move_speed = 150
+	ICE_RECT.visible = false
+	print("Player ice ended")

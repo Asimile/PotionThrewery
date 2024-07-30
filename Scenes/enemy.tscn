@@ -24,11 +24,20 @@ position = Vector2(1, 0)
 scale = Vector2(1.3, 1.3)
 texture = ExtResource("2_siaye")
 
-[node name="EnemyHurtbox" type="Area2D" parent="."]
-position = Vector2(9, 0)
+[node name="ShadowRect" type="ColorRect" parent="EnemySprite"]
+visible = false
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 5.0
+offset_bottom = 6.0
+color = Color(0.690196, 0.00392157, 0.964706, 0.345098)
+
+[node name="EnemyHurtbox" type="Area2D" parent="EnemySprite"]
+position = Vector2(6.15385, 0)
+scale = Vector2(0.769231, 0.769231)
 collision_layer = 32
 
-[node name="EnemyHurtboxShape" type="CollisionShape2D" parent="EnemyHurtbox"]
+[node name="EnemyHurtboxShape" type="CollisionShape2D" parent="EnemySprite/EnemyHurtbox"]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_r3ruv")
 debug_color = Color(0.996078, 0, 0.184314, 0.419608)
@@ -43,7 +52,7 @@ shape = SubResource("CircleShape2D_n7h7m")
 debug_color = Color(0.537255, 0.568627, 0, 0.419608)
 
 [node name="SpeedTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 3.0
 one_shot = true
 
 [node name="ShadowTimer" type="Timer" parent="."]
@@ -54,7 +63,22 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
-[connection signal="body_entered" from="EnemyHurtbox" to="." method="_on_enemy_hurtbox_body_entered"]
+[node name="IceRect" type="ColorRect" parent="."]
+visible = false
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 6.0
+offset_bottom = 7.0
+color = Color(0, 1, 1, 0.345098)
+
+[node name="EnemyHealth" type="Label" parent="."]
+offset_left = -2.0
+offset_top = -23.0
+offset_right = 38.0
+scale = Vector2(0.52913, 0.529396)
+text = "2"
+
+[connection signal="body_entered" from="EnemySprite/EnemyHurtbox" to="." method="_on_enemy_hurtbox_body_entered"]
 [connection signal="body_entered" from="SpawnCheck" to="." method="_on_spawn_check_body_entered"]
 [connection signal="timeout" from="SpeedTimer" to="." method="_on_speed_timer_timeout"]
 [connection signal="timeout" from="ShadowTimer" to="." method="_on_shadow_timer_timeout"]
