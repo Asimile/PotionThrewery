@@ -41,7 +41,7 @@ text = "Pretend this is a really good title screen"
 layout_mode = 0
 offset_left = 192.0
 offset_top = 467.0
-offset_right = 232.0
+offset_right = 750.0
 offset_bottom = 490.0
 text = "And that there's a cool transition from title screen to the game and back"
 
