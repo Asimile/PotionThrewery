@@ -28,9 +28,9 @@ func _on_kill_timer_timeout():
 	queue_free()
 
 func _on_body_entered(body):
-	if body.has_method("handle_hit"):
-		body.handle_hit()
-		#will be changed later to instead do special potion effects
+	if body.has_method("handle_potion_hit"):
+		body.handle_potion_hit(potion_type)
+		# I think for time purposes, I'm omitting any AOE things
 		queue_free()
 	else:
 		print("Wall or player hit?")

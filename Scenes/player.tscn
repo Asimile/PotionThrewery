@@ -15,7 +15,7 @@ shader_parameter/OLD_COLOR = Color(1, 1, 1, 1)
 shader_parameter/NEW_COLOR = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 72
+collision_mask = 88
 collision_priority = 10.0
 script = ExtResource("1_peo5x")
 Potion = ExtResource("2_iajll")
@@ -25,7 +25,7 @@ scale = Vector2(1.3, 1.3)
 texture = ExtResource("2_jqeqc")
 
 [node name="ThrowPosition" type="Marker2D" parent="PlayerSprite"]
-position = Vector2(6.15385, 0)
+position = Vector2(4.61538, 0)
 scale = Vector2(0.769231, 0.769231)
 
 [node name="PlayerWallCollision" type="CollisionShape2D" parent="."]
@@ -52,3 +52,27 @@ material = SubResource("ShaderMaterial_1uyx0")
 position = Vector2(190, 84)
 scale = Vector2(5, 5)
 texture = ExtResource("6_0jy24")
+
+[node name="SpeedTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="ShadowTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="IceTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="PotionLabel" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -24.0
+offset_right = 39.0
+offset_bottom = -1.0
+scale = Vector2(0.452151, 0.47868)
+text = "sample"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="SpeedTimer" to="." method="_on_speed_timer_timeout"]
+[connection signal="timeout" from="ShadowTimer" to="." method="_on_shadow_timer_timeout"]
+[connection signal="timeout" from="IceTimer" to="." method="_on_ice_timer_timeout"]

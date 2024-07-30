@@ -6,15 +6,19 @@ var health: int = 6
 var next_potion: potions
 var dead: bool = false
 
-enum potions {HEALING, FIRE, WATER, SPEED, LIGHTNING, POISON, VENOM, BOMB, DEATH, SHADOW, ICE}
-@export var potions_names = {potions.HEALING: "Healing", potions.FIRE: "Fire", potions.WATER: "Water", 
-potions.SPEED: "Speed", potions.LIGHTNING: "Lightning", potions.POISON: "Poison", potions.VENOM: "Venom",
-potions.BOMB: "Bomb", potions.DEATH: "Death", potions.SHADOW: "Shadow", potions.ICE: "Ice"}
+enum potions {HEALING, DAMAGE, FIRE, WATER, SPEED, POISON, DEATH, SHADOW, ICE}
+@export var potions_names = {potions.HEALING: "Healing", potions.FIRE: "Fire", potions.DAMAGE: "Damage",
+potions.WATER: "Water", potions.SPEED: "Speed", potions.POISON: "Poison", potions.DEATH: "Death", 
+potions.SHADOW: "Shadow", potions.ICE: "Ice"}
 
 @export var Potion :PackedScene
 
 @onready var PLAYER_SPRITE = $PlayerSprite
 @onready var THROW_POSITION = $PlayerSprite/ThrowPosition
+@onready var SPEED_TIMER = $SpeedTimer
+@onready var SHADOW_TIMER = $ShadowTimer
+@onready var ICE_TIMER = $IceTimer
+@onready var POTION_LABEL = $PotionLabel
 
 func _ready():
 	pick_random_potion()
@@ -78,6 +82,55 @@ func pick_random_potion():
 	#material.set_shader_parameter("OLD_COLOR", material.get_shader_parameter("NEW_COLOR"))
 	#material.set_shader_parameter("NEW_COLOR", Color(1.0, 0.0, 0.0))
 	print(potions_names[next_potion])
+	POTION_LABEL.text = potions_names[next_potion] + " Potion"
+	
+
+func handle_potion_hit(potion_type):
+	print("Enemy hit!")
+	match potion_type:
+		0:
+			# Health potion
+			health += 1
+		1:
+			# Fire potion
+			pass
+		2:
+			# Damage potion
+			health -= 1
+		3:
+			# Water potion
+			pass
+		4:
+			# Speed potion
+			move_speed += 20
+			SPEED_TIMER.start()
+		5:
+			# Poison potion
+			pass
+		6:
+			# Death potion
+			die()
+		7:
+			# Shadow potion
+			collision_layer = (0 << 0)
+			SHADOW_TIMER.start()
+		8:
+			# Ice potion
+			move_speed = 0
+			ICE_TIMER.start()
+		_:
+			pass
 
 func die():
 	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
+
+
+func _on_speed_timer_timeout():
+	move_speed -= 20
+
+func _on_shadow_timer_timeout():
+	collision_layer = (1 << 0)
+
+
+func _on_ice_timer_timeout():
+	move_speed = 150
