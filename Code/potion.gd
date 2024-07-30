@@ -1,7 +1,7 @@
 extends Node2D
 
+var potion_type
 var potion_speed: float = 5.0
-
 var direction: Vector2 = Vector2.ZERO
 
 @onready var POTION_SPRITE = $PotionSprite
@@ -24,6 +24,7 @@ func _on_color_picker_button_color_changed(color):
 	POTION_SPRITE.material.set_shader_parameter("NEW_COLOR", color)
 
 func _on_kill_timer_timeout():
+	print(potion_type)
 	queue_free()
 
 func _on_body_entered(body):
@@ -32,5 +33,5 @@ func _on_body_entered(body):
 		#will be changed later to instead do special potion effects
 		queue_free()
 	else:
-		print("Wall hit?")
+		print("Wall or player hit?")
 		queue_free()

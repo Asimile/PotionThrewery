@@ -41,11 +41,13 @@ limit_right = 525
 limit_bottom = 400
 
 [node name="PotionFrame" type="Sprite2D" parent="Camera2D"]
+visible = false
 position = Vector2(190, 87)
 scale = Vector2(2, 2)
 texture = ExtResource("3_n0kgp")
 
 [node name="NextPotion" type="Sprite2D" parent="Camera2D"]
+visible = false
 material = SubResource("ShaderMaterial_1uyx0")
 position = Vector2(190, 84)
 scale = Vector2(5, 5)

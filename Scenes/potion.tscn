@@ -12,6 +12,7 @@ shader_parameter/NEW_COLOR = null
 [sub_resource type="CircleShape2D" id="CircleShape2D_x0i55"]
 
 [node name="Potion" type="Area2D"]
+z_index = 500
 scale = Vector2(4.50535, 4.98575)
 collision_layer = 4
 collision_mask = 24
@@ -22,7 +23,7 @@ material = SubResource("ShaderMaterial_iwlyb")
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_bhwkp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PotionCollision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.200572)
 scale = Vector2(0.0645052, 0.0840375)
 shape = SubResource("CircleShape2D_x0i55")
@@ -37,7 +38,7 @@ offset_bottom = 34.2091
 text = "hi"
 
 [node name="KillTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 2.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
